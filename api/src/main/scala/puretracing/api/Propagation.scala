@@ -6,7 +6,7 @@ package puretracing.api
   */
 trait Tracer[F[_]] {
   type Span
-  type Headers = Map[String, String] // TODO: Make this param, perefebly on the methods not the whole trait
+  type Headers = Map[String, String] // TODO: Make this param, preferably on the methods not the whole trait
 
   def startRootSpan(operationName: String, upstreamSpan: Headers): F[Span]
   def export(span: Span): F[Headers]
@@ -29,7 +29,7 @@ trait Propagation[F[_]] extends Tracer[F] { // F could be ReaderT[IO]
 
 sealed trait TracingValue // Poor man's union types
 object TracingValue {
-  final case class StringTracingValue(value: String) extends TracingValue
-  final case class NumberTracingValue(value: Number) extends TracingValue
+  final case class StringTracingValue(value: String)   extends TracingValue
+  final case class NumberTracingValue(value: Number)   extends TracingValue
   final case class BooleanTracingValue(value: Boolean) extends TracingValue
 }
